@@ -1,7 +1,17 @@
 
 <script setup>
 import {ref} from 'vue';
+// 创建字符串
+const str =ref('12345')
+// 在script中使用变量
+console.log(str.value)
+console.log(str)
+// 这样子返回的是一个obj对象
 const value=ref('')
+// 监听事件函数
+function test（）{
+  console.log(str)
+}
 const list=ref(
   [
     {inCompleted:false,
@@ -30,7 +40,8 @@ function del(index){
 </script>
 <template>
   <div class="todo-app">
-    <div class="title">Todo App</div>
+    <div class="title">Todo App {{str}}</div>
+    <!-- 在template中可以直接使用str变量 -->
 
     <div class="todo-form">
       <input
@@ -41,6 +52,8 @@ function del(index){
       />
       <!-- 在input中获取输入的数值，并且实时保存到value变量中，动态绑定v-model与value -->
       <div @click="add" class="todo-button">Add Todo</div>
+      <div @click="test" class="todo-button">Test</div>
+
     </div>
     <div v-for="(item,index) in list" :class="[item.isCompleted?'completed':'item']">
       <!-- 不同的条件下选择不同的CSS style类名 -->
