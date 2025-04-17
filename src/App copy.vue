@@ -9,8 +9,14 @@ console.log(str)
 // 这样子返回的是一个obj对象
 const value=ref('')
 // 监听事件函数
-function test（）{
-  console.log(str)
+function test(){
+  console.log(str.value)
+}
+// 通过单选项进行双向绑定
+const abool=ref(true)
+function switchBool(){
+  console.log(abool.value)
+  abool.value=!abool.value
 }
 const list=ref(
   [
@@ -35,7 +41,7 @@ function add(){
 }
 
 function del(index){
-  list.value.splice{index,1}
+  list.value.splice(index,1);
 }
 </script>
 <template>
@@ -51,14 +57,17 @@ function del(index){
         placeholder="Add a todo"
       />
       <!-- 在input中获取输入的数值，并且实时保存到value变量中，动态绑定v-model与value -->
-      <div @click="add" class="todo-button">Add Todo</div>
-      <div @click="test" class="todo-button">Test</div>
+      <div @click="test" class="todo-button">Add Todo</div>
+      <!-- bidirectional binding双向绑定  -->
+      <div @mouseenter="test" class="todo-button">Test</div>
+      <div @click="switchBool" class="todo-button">Switch</div>
 
     </div>
     <div v-for="(item,index) in list" :class="[item.isCompleted?'completed':'item']">
       <!-- 不同的条件下选择不同的CSS style类名 -->
       <!-- index代表数组下标 -->
       <div>
+        <!-- <input v-model="abool" type="checkbox" /> -->
         <input v-model="item.isCompleted" type="checkbox" />
         <span class="name">{{ item.text }}</span>
         <!-- item here refers to key-value pair in the dict list -->
@@ -69,7 +78,7 @@ function del(index){
 
   </div>
 </template>
-
+<!-- 主要的操作主要在Script(js)和template(html)4.17脑袋绕晕了，明天4.18继续再清一清 -->
 <style scoped>
 .todo-app {
   box-sizing: border-box;
