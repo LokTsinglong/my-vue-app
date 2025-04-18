@@ -25,7 +25,7 @@ function add(){
 }
 
 function del(index){
-  list.value.splice{index,1}
+  // list.value.splice{index,1};
 }
 </script>
 <template>

@@ -1,11 +1,11 @@
 
 <script setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue'
 // 创建字符串
 const str =ref('12345')
 // 在script中使用变量
-console.log(str.value)
-console.log(str)
+// console.log(str.value)
+// console.log(str)
 // 这样子返回的是一个obj对象
 const value=ref('')
 // 监听事件函数
@@ -13,11 +13,7 @@ function test(){
   console.log(str.value)
 }
 // 通过单选项进行双向绑定
-const abool=ref(true)
-function switchBool(){
-  console.log(abool.value)
-  abool.value=!abool.value
-}
+
 const list=ref(
   [
     {inCompleted:false,
@@ -39,17 +35,35 @@ function add(){
   })
   value.value=''
 }
+// waching test
+const str1 =ref(" ")
+function watchingTest(newValue,oldValue){
+  console.log('new value:'+ newValue, 'old value:'+oldValue)
+}
 
+watch(str1,watchingTest)
+// 深度监听
+// watch(str1,watchingTest，{deep:true})
+// 就可以监听到obj[attribute]
+
+const abool=ref(true)
+function switchBool(){
+  abool.value =! abool.value
+}
 function del(index){
   list.value.splice(index,1);
 }
+const showV =ref(111)
 </script>
 <template>
   <div class="todo-app">
-    <div class="title">Todo App {{str}}</div>
+    <div v-show="showV" class="title">Todo App {{str}}</div>
     <!-- 在template中可以直接使用str变量 -->
+    <!--v-show掩藏 v-if盐都不盐了直接不创建  -->
 
     <div class="todo-form">
+      <!-- v-model="abool" -->
+      <!-- v-model="str1" -->
       <input
         v-model="value" 
         type="text"
@@ -57,7 +71,7 @@ function del(index){
         placeholder="Add a todo"
       />
       <!-- 在input中获取输入的数值，并且实时保存到value变量中，动态绑定v-model与value -->
-      <div @click="test" class="todo-button">Add Todo</div>
+      <div @click="add" class="todo-button">Add Todo</div>
       <!-- bidirectional binding双向绑定  -->
       <div @mouseenter="test" class="todo-button">Test</div>
       <div @click="switchBool" class="todo-button">Switch</div>
